@@ -36,18 +36,24 @@ def dijkstra(grafo, salida):
                 prev[vecino] = nodo_min
 
     return usados, dist, prev
+
+def next_hop(previos, nodo, salida):
+    while previos[nodo] != salida:
+        nodo = previos[nodo]
+    return nodo
+
 def armarTabla():
     for i in grafo:
-        print(dijkstra(grafo, i))
         print("Tabla router ", i)
-        print("{:<10} {:<10} {:<10}".format("Destino", "Distancia", "Previo"))
+        print("{:<10} {:<10} {:<10}".format("Destino", "Distancia", "NextHop"))
         usados, distancia, previos = dijkstra(grafo, i)
         for nodo in distancia:
             dis = distancia[nodo]
             pre = previos[nodo]
             if pre != None:
                 if pre!=i:
-                    print("{:<10} {:<10} {:<10}".format(nodo, dis, pre))
+                    nextHop = next_hop(previos, nodo, i)
+                    print("{:<10} {:<10} {:<10}".format(nodo, dis, nextHop))
                 else:
                     print("{:<10} {:<10} {:<10}".format(nodo, dis, "Directo"))
 def main():
